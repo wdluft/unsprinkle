@@ -7,17 +7,19 @@ const PhotoGridItem = ({ id, src, alt, tags }) => {
       <Anchor href={`/photos/${id}`}>
         <picture>
           <source
+            type='image/avif'
             srcSet={`
-      ${src.replace('.jpg', '.avif')},
-      ${src.replace('.jpg', '@2x.avif')},
-      ${src.replace('.jpg', '@3x.avif')},
-      `}
+            ${src.replace('.jpg', '.avif')},
+            ${src.replace('.jpg', '@2x.avif')} 2x,
+            ${src.replace('.jpg', '@3x.avif')} 3x,
+            `}
           />
           <source
+            type='image/jpeg'
             srcSet={`
-      ${src.replace('.', '.')},
-      ${src.replace('.', '@2x.')},
-      ${src.replace('.', '@3x.')},
+      ${src.replace('.', '.')} 2x,
+      ${src.replace('.', '@2x.')} 3x,
+      ${src.replace('.', '@3x.')} 3x,
       `}
           />
           <Image src={src} alt={`Link to an image of ${alt}`} />
@@ -48,12 +50,14 @@ const Image = styled.img`
 `;
 
 const Tags = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 4px 0;
 `;
 
 const Tag = styled.li`
+  display: inline-block;
   padding: 4px 8px;
   background: var(--color-gray-300);
   font-size: 0.875rem;
